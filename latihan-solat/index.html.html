@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Latihan Interaktif Solat Sunat Rawatib</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+<style>
+  body {
+    font-family: Arial;
+    text-align: center;
+    background: #f5f5f5;
+  }
+
+  canvas {
+    border: 2px solid #ccc;
+    margin-top: 10px;
+  }
+
+  button, select {
+    margin: 5px;
+    padding: 10px;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<h2>🕌 Latihan Interaktif: Solat Sunat Rawatib</h2>
+
+<!-- BUTTON -->
+<button onclick="enableDraw()">✏️ Conteng</button>
+<button onclick="disableDraw()">🖱️ Gerak</button>
+<button onclick="addText()">📝 Tambah Jawapan</button>
+
+<select onchange="changeColor(this.value)">
+  <option value="black">Hitam</option>
+  <option value="red">Merah</option>
+  <option value="blue">Biru</option>
+</select>
+
+<button onclick="downloadImage()">💾 Download</button>
+<button onclick="clearCanvas()">🧹 Reset</button>
+
+<br>
+
+<canvas id="canvas" width="1100" height="650"></canvas>
+
+<script>
+const canvas = new fabric.Canvas('canvas');
+
+// LOAD GAMBAR (guna file awak)
+fabric.Image.fromURL('file_0000000094a8722f9b28a58f45bff434.png', function(img) {
+    img.scaleToWidth(1100);
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+});
+
+// MODE DRAW
+function enableDraw() {
+    canvas.isDrawingMode = true;
+}
+
+function disableDraw() {
+    canvas.isDrawingMode = false;
+}
+
+// WARNA PEN
+function changeColor(color) {
+    canvas.freeDrawingBrush.color = color;
+}
+
+// TAMBAH TEXT
+function addText() {
+    const text = new fabric.IText('Tulis jawapan...', {
+        left: 100,
+        top: 100,
+        fontSize: 22,
+        fill: 'black'
+    });
+    canvas.add(text);
+}
+
+// DOWNLOAD
+function downloadImage() {
+    const link = document.createElement('a');
+    link.download = 'jawapan.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+// CLEAR
+function clearCanvas() {
+    canvas.getObjects().forEach(obj => canvas.remove(obj));
+}
+</script>
+
+</body>
+</html>
